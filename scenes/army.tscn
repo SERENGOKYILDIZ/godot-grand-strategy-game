@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dwdaye4j4ptuh"]
+
+[ext_resource type="Texture2D" uid="uid://cavr5i8yivk3p" path="res://pictures/Units/army.png" id="1_n4j7m"]
+[ext_resource type="Texture2D" uid="uid://hwklfwwj5ow3" path="res://pictures/Units/armySelect.png" id="2_8vbmy"]
+[ext_resource type="Script" uid="uid://bxmtethanotd5" path="res://scripts/Army.gd" id="2_786ay"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_786ay"]
+radius = 32.0
+
+[node name="Army" type="Node2D" unique_id=1619226714]
+script = ExtResource("2_786ay")
+
+[node name="LightArmy" type="Sprite2D" parent="." unique_id=321468340]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_8vbmy")
+
+[node name="ArmySprite" type="Sprite2D" parent="." unique_id=1145686032]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_n4j7m")
+
+[node name="SelectRing" type="Sprite2D" parent="." unique_id=1690171756]
+
+[node name="ClickArea" type="Area2D" parent="." unique_id=344820499]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea" unique_id=639077055]
+shape = SubResource("CircleShape2D_786ay")

@@ -1,8 +1,68 @@
 {
-	"#ff0000": "London",
-	"#00ff00": "Berlin",
-	"#0000ff": "Paris",
-	"#00ffff": "Ankara",
-	"#ff00ff": "Rize",
-	"#ffff00": "Trabzon"
+	"#ff0000": 
+		{
+			"name": "London",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				377,
+				330
+			]
+		},
+	"#00ff00": 
+		{
+			"name": "Berlin",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				500,
+				570
+			]
+		},
+	"#0000ff": 		
+		{
+			"name": "Paris",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				600,
+				330
+			]
+		},
+	"#00ffff": 
+		{
+			"name": "Ankara",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				790,
+				530
+			]
+		},
+	"#ff00ff": 
+		{
+			"name": "Rize",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				880,
+				220
+			]
+		},
+	"#ffff00": 
+		{
+			"name": "Trabzon",
+			"population": 150000,
+			"oil": 0,
+			"gdp": 600,
+			"center": [
+				1040,
+				450
+			]
+		}
 }
