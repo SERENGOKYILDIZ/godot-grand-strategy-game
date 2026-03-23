@@ -176,8 +176,6 @@ func load_region_masks():
 func _unhandled_input(event):
 	# --- Zoom handled by CameraController ---
 	camera_controller.handle_zoom(event)
-
-
 	if event is InputEventMouseButton and event.pressed:
 		var world_pos = camera.get_global_mouse_position()
 		var army_clicked := false
@@ -196,7 +194,7 @@ func _unhandled_input(event):
 					army_clicked = true
 					break
 					
-			# --- LEFT CLICK: select region / show panel ---
+			# --- select region / show panel ---
 			if not army_clicked:
 				if armies_manager.selected_army != null:
 					armies_manager.selected_army.deselect()
@@ -228,7 +226,7 @@ func _unhandled_input(event):
 					fade_out_highlight()
 					info_panel.hide_panel()
 		# --- If no army was clicked but one is selected, move it to clicked region ---
-		if not army_clicked and armies_manager.selected_army and event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_RIGHT and not army_clicked and armies_manager.selected_army:
 			# Determine which region was clicked
 			var local_pos = map_sprite.to_local(world_pos)
 			var tex_size = map_sprite.texture.get_size()
@@ -247,6 +245,13 @@ func _unhandled_input(event):
 				var region_info = color_to_region[hex_color]
 				var region_name = region_info.get("name", "Unknown")
 				armies_manager.move_selected_army_to_region(region_name)
+			else:
+				print("Unknown clicked")
+				fade_out_highlight()
+				info_panel.hide_panel()
+				if armies_manager.selected_army != null:
+					armies_manager.selected_army.deselect()
+					armies_manager.selected_army = null
 
 
 

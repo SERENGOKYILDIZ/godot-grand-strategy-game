@@ -27,8 +27,6 @@ var current_region_name: String = ""
 func _ready():
 	# Connect close button
 	close_button.pressed.connect(self.hide_panel)
-	hide_panel()
-
 
 	# Set font sizes
 	region_name_label.add_theme_font_size_override("font_size", 28)
@@ -80,6 +78,8 @@ func show_panel(region_name: String, nation_owner, population: int = 0, oil: flo
 
 
 func hide_panel():
+	var main: Node2D = $"../.."
+	main.fade_out_highlight()
 	# Create a tween for fade-out
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)  # 0.3s fade
