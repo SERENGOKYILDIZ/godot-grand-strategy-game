@@ -180,43 +180,10 @@ func _unhandled_input(event):
 
 	if event is InputEventMouseButton and event.pressed:
 		var world_pos = camera.get_global_mouse_position()
-		# --- LEFT CLICK: select region / show panel ---
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if armies_manager.selected_army != null:
-				armies_manager.selected_army.deselect()
-				armies_manager.selected_army = null
-			var local_pos = map_sprite.to_local(world_pos)
-			var tex_size = map_sprite.texture.get_size()
-			var pivot_offset = tex_size / 2 if map_sprite.centered else Vector2()
-			var pixel_pos = local_pos + pivot_offset
-			pixel_pos.x = clamp(pixel_pos.x, 0, tex_size.x - 1)
-			pixel_pos.y = clamp(pixel_pos.y, 0, tex_size.y - 1)
-			pixel_pos = Vector2i(pixel_pos)
-
-
-			var pixel_color = map_sprite.texture.get_image().get_pixelv(pixel_pos)
-			var hex_color = "#" + pixel_color.to_html(false).to_upper()
-
-
-			if hex_color in color_to_region:
-				var region_info = color_to_region[hex_color]
-				var region_name = region_info.get("name", "Unknown")
-				show_highlight(region_name)
-				var show_panel_owner = nation_manager.get_region_owner(region_name)
-				var population = int(region_info.get("population", 0))
-				var gdp = int(float(region_info.get("gdp", region_info.get("GDP", 0))))
-				var oil = float(region_info.get("oil", 0))
-				info_panel.show_panel(region_name, show_panel_owner, population, oil, gdp)
-			else:
-				print("Unknown color clicked")
-				fade_out_highlight()
-				info_panel.hide_panel()
-
-
+		var army_clicked := false
 		# --- RIGHT CLICK: select army OR move selected army ---
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_LEFT:
 			fade_out_highlight()
-			var army_clicked := false
 			for army in armies_manager.armies:
 				var dist = army.global_position.distance_to(world_pos)
 				if dist <= 32:
@@ -228,11 +195,12 @@ func _unhandled_input(event):
 					print("Right-clicked army:", army.name)
 					army_clicked = true
 					break
-
-
-			# --- If no army was clicked but one is selected, move it to clicked region ---
-			if not army_clicked and armies_manager.selected_army:
-				# Determine which region was clicked
+					
+			# --- LEFT CLICK: select region / show panel ---
+			if not army_clicked:
+				if armies_manager.selected_army != null:
+					armies_manager.selected_army.deselect()
+					armies_manager.selected_army = null
 				var local_pos = map_sprite.to_local(world_pos)
 				var tex_size = map_sprite.texture.get_size()
 				var pivot_offset = tex_size / 2 if map_sprite.centered else Vector2()
@@ -249,7 +217,39 @@ func _unhandled_input(event):
 				if hex_color in color_to_region:
 					var region_info = color_to_region[hex_color]
 					var region_name = region_info.get("name", "Unknown")
-					armies_manager.move_selected_army_to_region(region_name)
+					show_highlight(region_name)
+					var show_panel_owner = nation_manager.get_region_owner(region_name)
+					var population = int(region_info.get("population", 0))
+					var gdp = int(float(region_info.get("gdp", region_info.get("GDP", 0))))
+					var oil = float(region_info.get("oil", 0))
+					info_panel.show_panel(region_name, show_panel_owner, population, oil, gdp)
+				else:
+					print("Unknown color clicked")
+					fade_out_highlight()
+					info_panel.hide_panel()
+		# --- If no army was clicked but one is selected, move it to clicked region ---
+		if not army_clicked and armies_manager.selected_army and event.button_index == MOUSE_BUTTON_RIGHT:
+			# Determine which region was clicked
+			var local_pos = map_sprite.to_local(world_pos)
+			var tex_size = map_sprite.texture.get_size()
+			var pivot_offset = tex_size / 2 if map_sprite.centered else Vector2()
+			var pixel_pos = local_pos + pivot_offset
+			pixel_pos.x = clamp(pixel_pos.x, 0, tex_size.x - 1)
+			pixel_pos.y = clamp(pixel_pos.y, 0, tex_size.y - 1)
+			pixel_pos = Vector2i(pixel_pos)
+
+
+			var pixel_color = map_sprite.texture.get_image().get_pixelv(pixel_pos)
+			var hex_color = "#" + pixel_color.to_html(false).to_upper()
+
+
+			if hex_color in color_to_region:
+				var region_info = color_to_region[hex_color]
+				var region_name = region_info.get("name", "Unknown")
+				armies_manager.move_selected_army_to_region(region_name)
+
+
+
 
 
 
