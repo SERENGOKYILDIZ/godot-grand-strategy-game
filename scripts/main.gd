@@ -176,9 +176,9 @@ func load_region_masks():
 func _unhandled_input(event):
 	# --- Zoom handled by CameraController ---
 	camera_controller.handle_zoom(event)
+	var army_clicked := false
 	if event is InputEventMouseButton and event.pressed:
 		var world_pos = camera.get_global_mouse_position()
-		var army_clicked := false
 		# --- RIGHT CLICK: select army OR move selected army ---
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			fade_out_highlight()
@@ -252,6 +252,14 @@ func _unhandled_input(event):
 				if armies_manager.selected_army != null:
 					armies_manager.selected_army.deselect()
 					armies_manager.selected_army = null
+					
+	elif event.is_action_pressed("army_cancel"):
+		print("Herseyi kapa")
+		fade_out_highlight()
+		info_panel.hide_panel()
+		if armies_manager.selected_army != null:
+			armies_manager.selected_army.deselect()
+			armies_manager.selected_army = null
 
 
 

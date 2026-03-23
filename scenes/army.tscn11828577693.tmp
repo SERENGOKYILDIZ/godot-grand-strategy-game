@@ -3,18 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cavr5i8yivk3p" path="res://pictures/Units/army.png" id="1_n4j7m"]
 [ext_resource type="Texture2D" uid="uid://hwklfwwj5ow3" path="res://pictures/Units/armySelect.png" id="2_8vbmy"]
 [ext_resource type="Script" uid="uid://bxmtethanotd5" path="res://scripts/Army.gd" id="2_786ay"]
-[ext_resource type="Shader" uid="uid://c3agh74rcd25t" path="res://shaders/armyLine.gdshader" id="4_pimn7"]
-[ext_resource type="Texture2D" uid="uid://xfdi30oj4yyn" path="res://pictures/Sembols/target.png" id="5_rtv1n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_786ay"]
 radius = 32.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rtv1n"]
-shader = ExtResource("4_pimn7")
-shader_parameter/current_distance = 100.0
-shader_parameter/dash_width = 20.0
-shader_parameter/dash_ratio = 0.5
-shader_parameter/line_color = Color(1, 1, 1, 1)
 
 [node name="Army" type="Node2D" unique_id=1619226714]
 script = ExtResource("2_786ay")
@@ -35,16 +26,6 @@ texture = ExtResource("1_n4j7m")
 shape = SubResource("CircleShape2D_786ay")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1332040909]
-visible = false
-top_level = true
-material = SubResource("ShaderMaterial_rtv1n")
-texture = ExtResource("2_8vbmy")
-texture_mode = 2
+texture_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
-
-[node name="TargetMarker" type="Sprite2D" parent="." unique_id=1898674866]
-visible = false
-top_level = true
-scale = Vector2(0.06, 0.06)
-texture = ExtResource("5_rtv1n")
